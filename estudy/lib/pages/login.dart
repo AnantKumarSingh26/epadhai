@@ -1,3 +1,4 @@
+import 'package:estudy/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -12,30 +13,40 @@ class LoginPage extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
+                // Align(
+                //   child: Text(
+                //     'Welcome Back ',
+                //     style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+                //   ),
+                // ),
                 Align(
-                    alignment: Alignment.centerLeft,
-                    child: ColorChangingText()),
-                Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     'Login',
                     style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
+                  height: 25,
+                ),
+                SizedBox(
                   height: 90,
+                  child: Image.asset('assets/images/logo.png'),
+                ),
+                SizedBox(
+                  height: 45,
                 ),
                 Text(
                   'Username',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 TextField(
                   decoration: InputDecoration(
@@ -58,7 +69,7 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 PasswordField(), //Calling Stateful Password
                 Align(
@@ -68,7 +79,7 @@ class LoginPage extends StatelessWidget {
                         // print('forget button');
                       },
                       child: const Text(
-                        'Forgotten Password ?',
+                        'Forget Password ?',
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -106,9 +117,11 @@ class LoginPage extends StatelessWidget {
                           color: const Color.fromARGB(206, 53, 53, 54)),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Signup();
+                      },
                       child: Text(
-                        'Sign-Up',
+                        'SignUp',
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w900,
@@ -159,49 +172,6 @@ class _PasswordFieldState extends State<PasswordField> {
             },
             icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off)),
         hintStyle: TextStyle(fontSize: 17),
-      ),
-    );
-  }
-}
-
-// Creating a separate StatefulWidget for the welcome text
-class ColorChangingText extends StatefulWidget {
-  const ColorChangingText({super.key});
-
-  @override
-  State<ColorChangingText> createState() => _ColorChangingTextState();
-}
-
-class _ColorChangingTextState extends State<ColorChangingText> {
-  bool isBlack = true;
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        isBlack = !isBlack;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Welcome Back',
-      style: TextStyle(
-        fontSize: 50,
-        fontWeight: FontWeight.bold,
-        color: isBlack
-            ? const Color.fromARGB(255, 255, 78, 14)
-            : const Color.fromARGB(255, 8, 102, 243),
       ),
     );
   }

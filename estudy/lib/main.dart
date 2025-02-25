@@ -1,5 +1,6 @@
+import 'package:estudy/pages/welcome.dart';
 import 'package:flutter/material.dart';
-import 'pages/login.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Main Page',
      
-      home: LoginPage(),
+      home: WelcomePage(),
     );
   }
 }

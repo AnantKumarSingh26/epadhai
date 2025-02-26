@@ -1,177 +1,204 @@
 import 'package:estudy/pages/signup.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'welcome.dart'; // Ensure this import points to your WelcomePage
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
+    // Controllers for text fields
+    final TextEditingController _usernameController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF1F41BB),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'Padhaii',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_double_arrow_left_rounded),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => WelcomePage()),
+            );
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 20,
-                ),
-                // Align(
-                //   child: Text(
-                //     'Welcome Back ',
-                //     style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
-                //   ),
-                // ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                SizedBox(
-                  height: 90,
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-                SizedBox(
-                  height: 45,
-                ),
+                const SizedBox(height: 40),
                 Text(
-                  'Username',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  'Login here',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                      fontFamily: 'Poppins',
+                      color: Color(0xFF1F41BB)),
                 ),
-                SizedBox(
-                  height: 10,
+                SizedBox(height: 30), // Spacing
+
+                // Subtitle
+                Text(
+                  'Welcome back champ, you\'ve been missed!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600),
                 ),
+                SizedBox(height: 50), // Spacing
+
+                // Username TextField
                 TextField(
+                  controller: _usernameController,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                          color: const Color.fromARGB(255, 13, 78, 217),
-                          width: 5.0,
-                        )),
-                    hintText: 'Enter Username',
-                    prefixIcon: Icon(Icons.person),
-                    hintStyle: TextStyle(fontSize: 17),
+                    labelText: 'Username', // Label text
+                    hintText: 'Enter your username', // Placeholder text
+                    prefixIcon: Icon(Icons.person), // Icon
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.grey), // Grey border when not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color(0xFF1F41BB)), // Blue border when focused
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: 40,
+                SizedBox(height: 30), // Spacing
+
+                // Password TextField
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true, // Hide password text
+                  decoration: InputDecoration(
+                    labelText: 'Password', // Label text
+                    hintText: 'Enter your password', // Placeholder text
+                    prefixIcon: Icon(Icons.lock), // Icon
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.grey), // Grey border when not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color(0xFF1F41BB)), // Blue border when focused
+                    ),
+                  ),
                 ),
-                Text(
-                  'Password',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                PasswordField(), //Calling Stateful Password
+                SizedBox(height: 15), // Spacing
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                      onPressed: () {
-                        // print('forget button');
-                      },
-                      child: const Text(
-                        'Forget Password ?',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 255, 17, 0)),
-                      )),
-                ),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: 240,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF358BE7),
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      // Handle login logic
-                    },
+                    onPressed: () {},
                     child: Text(
-                      'Login',
-                      style: TextStyle(fontSize: 20),
+                      'Forgot your password?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                      ),
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
+                // Login Button
                 SizedBox(
-                  height: 10,
+                  width: double.infinity, // Full width
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Retrieve entered username and password
+                      String username = _usernameController.text;
+                      String password = _passwordController.text;
+
+                      // Print to console (for debugging)
+                      print('Username: $username, Password: $password');
+
+                      // Navigate to WelcomePage
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => WelcomePage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF1F41BB), // Button color
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15), // Button padding
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(10), // Rounded corners
+                      ),
+                    ),
+                    child: Text(
+                      'Sign in',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Poppins',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Signup()));
+                    },
+                    child: Text(
+                      'Create new account',
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    )),
+                const SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Or continue with',
+                  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Don\'t have an Account?',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w900,
-                          color: const Color.fromARGB(206, 53, 53, 54)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Signup();
-                      },
-                      child: Text(
-                        'SignUp',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                            color: const Color.fromARGB(255, 203, 31, 31)),
-                      ),
-                    )
+                    IconButton(onPressed: () {}, icon: Icon(Icons.facebook)),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Image.network(
+                          'https://img.icons8.com/?size=100&id=V5cGWnc9R4xj&format=png&color=000000',
+                          width: 23,
+                          height: 23,
+                        ))
                   ],
-                ),
+                )
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-//Making Password Field Statefull
-
-class PasswordField extends StatefulWidget {
-  const PasswordField({super.key});
-
-  @override
-  State<PasswordField> createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<PasswordField> {
-  bool _obscureText = true;
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      obscureText: _obscureText,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(
-            color: const Color.fromARGB(255, 13, 78, 217),
-            width: 5.0,
-          ),
-        ),
-        hintText: 'Enter Password',
-        prefixIcon: Icon(Icons.lock),
-        suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off)),
-        hintStyle: TextStyle(fontSize: 17),
       ),
     );
   }
